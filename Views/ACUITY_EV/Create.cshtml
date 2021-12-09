@@ -1,0 +1,158 @@
+﻿@using acuity_tooll.Models
+@model ACUITY_EV
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <br />
+    <br />
+    <br />
+    <div class="form-horizontal">
+        <h4 style="color:#1C4288; font-weight:bold">Add New Acuity</h4>
+        <hr />
+        <div class="container shadow">
+            <div class="container shadow p-3">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group" style="display: none;">
+                    @Html.DropDownList("AC_ID", null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AC_ID, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AC_ID, "MRN :", htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883; font-weight:bold" })<br />
+                    <div class="col-md-10">
+                        @Html.DropDownList("MRN", null, new { @class = "form-control", @style = "width:400px; border:none; background:none; padding:0", disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.AC_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ACUITY_TOOL.P_NAME, "Petient Name :", htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883; font-weight:bold" })<br />
+                    <div class="col-md-10">
+                        @Html.DropDownList("P_NAME", null, new { @class = "form-control", @style = "width:400px; border:none; background:none; padding:0", @readonly = true, disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.ACUITY_TOOL.P_NAME, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ACUITY_TOOL.ROOM, "ROOM :", htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883; font-weight:bold" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("ROOM", null, new { @class = "form-control", type = "tel", disabled = "disabled", @style = "width:400px; border:none; background:none; padding:0" })
+                        @Html.ValidationMessageFor(model => model.ACUITY_TOOL.ROOM, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SHIFT, "Shift :", htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883;width:400px; border:none;background:none; font-weight:bold" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("SHIFT", null, htmlAttributes: new { @class = "form-control dropdown", @style = "width:500px;background:none; padding:0" })
+                        @Html.ValidationMessageFor(model => model.SHIFT, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+ 
+                <br />
+                <input type="hidden" name="MASTER_ID" value="1" />
+                <input type="hidden" name="DET_ID" value="1" />
+
+
+                @{
+
+                    var counter = 0;
+                    foreach (var master in (List<ACUITY_MASTER>)ViewBag.MasterList)
+                    {
+                        var masterDetailList = ((List<ACUITY_DETAIL>)ViewBag.DetailList).Where(e => e.MASTER_ID == master.ID).ToList();
+                        var det = masterDetailList.Select(s => s.VALUE).ToList();
+
+
+                        <input type="hidden" name="details[@counter].MASTER_ID" value="@master.ID" />
+
+                        <div class="form-group">
+                            <label class="control-label col-2" style="color:#00a883; font-weight:bold"> @master.TITLE : </label>
+                            <div class="row-cols-2" id="V2">
+                                @Html.DropDownList($"details[{counter}].DET_ID", new SelectList(masterDetailList, "ID", "SUB_TITLE", det), htmlAttributes: new { @class = "form-control dropDownId items", @id = "dropDownId", @style = "width:500px;background:none; padding:0", value = "@model => model.ACUITY_DETAIL.VALUE" })
+                                @Html.ValidationMessageFor(model => model.DET_ID, "", new { @class = "text-danger" })
+                                @*<div>
+                            @Html.DropDownListFor(model => model.ACUITY_DETAIL.VALUE, new SelectList(det), new { @id = "vv", @class = "auto" })
+
+                        </div>*@
+                                @*@Html.DropDownListFor(model => model.ACUITY_DETAIL.VALUE, new SelectList(det, "ID", "VALUE"), htmlAttributes: new { @class = "form-control  auto" })*@
+                                @*@Html.DropDownList(, new List<SelectListItem>(), "--Select--", new { @id = "vv" })*@
+                            </div>
+                        </div>
+                        @*if (counter % 4 == 3)
+                {
+                    <br />
+                }*@
+                        counter++;
+                        @*if (counter == 16)
+                    { var total = det.Sum();
+                <table>
+                    <label>Total Score</label>
+                    <br />
+                    <input type="text" value="@total" style="border:none" />
+                </table>*@
+                        //}
+                    }
+
+                }
+                <br />
+                <label style="color:#00a883; font-weight:bold">Total Scoring : </label>
+                <label id="LabelTotal" style="font-weight:bold"></label>
+
+                <br />
+                <label style="color:#00a883; font-weight:bold">Score : </label>
+                <label id="Labelscore" style="font-weight:bold"></label><br /><br />
+                @*<div style="display: none;">
+                    @Html.LabelFor(model => model.SCORE, htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883; font-weight:bold" })
+
+                    @Html.EditorFor(model => model.SCORE, new { htmlAttributes = new { @class = "form-control", @style = "width:500px;background:none; padding:0" } })
+
+                    @Html.ValidationMessageFor(model => model.SCORE, "", new { @class = "text-danger" })
+                </div>*@
+                @Html.LabelFor(model => model.NURSE_NAME, "Nurse Name :", htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883; font-weight:bold" })
+                @Html.EditorFor(model => model.NURSE_NAME, new { htmlAttributes = new { @class = "form-control", @style = "width:500px;background:none; padding:0" } })
+                @Html.ValidationMessageFor(model => model.NURSE_NAME, "", new { @class = "text-danger" })
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Submit" class="btn " style="background-color:#1C4288; color:#ffffff; font-weight:bold" />
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script rel="javascript" type="text/javascript" href="js/jquery-1.11.3.min.js"></script>
+<script>
+    $(document).ready(function () {
+        CalculateTotal();
+        $('.items').change(function () { CalculateTotal(); });
+    });
+
+    function CalculateTotal() {
+        var val = 0;
+        
+        $('.items').each(function () {
+            var cv = parseFloat($(this).find('option:selected').val());
+            var vv = 0;
+            if (cv == 4 || cv == 8 || cv == 12 || cv == 16 || cv == 26 || cv == 30 || cv == 34 || cv == 38 || cv == 42 || cv == 46 || cv == 53 || cv ==57) { vv = 0; }
+            else if (cv == 1 || cv == 5 || cv == 9 || cv == 13 || cv == 17 || cv == 20 || cv == 23 || cv == 27 || cv == 31 || cv == 35 || cv == 39 || cv == 43 || cv == 47 || cv == 50 || cv == 54 || cv ==58) { vv = 1;}
+            else if (cv == 2 || cv == 6 || cv == 10 || cv == 14 || cv == 18 || cv == 21 || cv == 24 || cv == 28 || cv == 32 || cv == 36 || cv == 40 || cv == 44 || cv == 48 || cv == 51 || cv == 55 || cv ==59) { vv = 2;}
+            else if (cv == 3 || cv == 7 || cv == 11 || cv == 15 || cv == 19 || cv == 22 || cv == 25 || cv == 29 || cv == 33 || cv == 37 || cv == 41 || cv == 45 || cv == 49 || cv == 52 || cv == 56 || cv ==60) { vv = 3;}
+            val = val + vv ;
+        });
+        $('#LabelTotal').text(val);
+        if (val < 17) { $('#Labelscore').text("1"); } else if (val < 24) { $('#Labelscore').text("2"); } else if (val > 24) { $('#Labelscore').text("3"); }
+        val = 0;
+    }
+</script>

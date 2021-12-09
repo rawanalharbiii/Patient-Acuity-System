@@ -1,0 +1,83 @@
+﻿@model IEnumerable<acuity_tooll.Models.RCM_OMAR>
+
+@{
+    ViewBag.Title = "page1";
+
+
+}
+
+    @*@if (Session["USER_NAME"] != null)
+        {<p> Welcome @Session["USER_NAME"].ToString() </p>}*@
+
+    @using (@Html.BeginForm("page1", "Home", FormMethod.Get))
+    {<br />
+        <table>
+            <tr>
+                <td>
+                    @Html.TextBox("search", "", new { @class = "form-control" })
+                </td>
+                <td>
+                    <button type="submit" style=" background-image: url('../../images/search.png');background-repeat:no-repeat; width:40px;height:40px; color: #ffffff;" class=" btn " />
+                </td>
+            </tr>
+        </table>
+    }
+    <br />
+    <center>
+        <table class="table" style="max-width:min-content;white-space:nowrap; text-align:center; padding:0;   ">
+            <thead class="thead-light" style="color: #00a883;">
+                <tr>
+                    <th style=" text-align:center" scope="col">MRN</th>
+                    <th style=" text-align:center" scope="col">Account</th>
+                    <th style=" text-align:center" scope="col">Patient Name</th>
+                    <th style=" text-align:center" scope="col">Addmetin Date</th>
+                    <th style=" text-align:center" scope="col">Room</th>
+                    <th style=" text-align:center" scope="col">Bed</th>
+                    <th style=" text-align:center" scope="col">Duration</th>
+                    <th style=" text-align:center" scope="col">Ward</th>
+                    <th style=" text-align:center" scope="col">Doctor</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+
+
+                @if (Model != null)
+                {
+
+                    foreach (var item in Model)
+                    {
+
+                        <tr class="row-no-gutters">
+
+                            <td><b>@item.MRN</b></td>
+                            <td><p><b>@item.ACCOUNT_</b></p></td>
+                            <td><p><b>@item.PATIENT_NAME</b></p></td>
+                            <td><p><b>@item.ADMISSION_DATE_</b></p></td>
+                            <td><p><b>@item.ROOM</b></p></td>
+                            <td><p><b>@item.BED</b></p></td>
+                            <td><p><b>@item.LOS</b></p></td>
+                            <td><p><b>@item.WARD_DIS</b></p></td>
+                            <td><p><b>@item.NAME_</b></p></td>
+
+
+                        </tr>
+                    }
+
+
+
+                }
+                else
+                {
+                    <tr>
+                        <td><p><b> NO MACH ANY DATA </b></p></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </center>
+
+
+
+

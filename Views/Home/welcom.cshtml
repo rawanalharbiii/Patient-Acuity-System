@@ -1,0 +1,105 @@
+﻿@using acuity_tooll.Models
+@model IEnumerable<RCM_OMAR>
+
+
+@{
+    ViewBag.Title = "welcom";
+}
+
+<body style="background-image:url('../images/FV_ipads_blog.png'); background-size:cover">
+
+    <br />
+    <br />
+    <img src="~/images/Asset-7.png" style="height:150PX; width:150PX" />
+    <br />
+    <section id="facts" class="facts">
+        <div data-aos="fade-up">
+            <div class="section-title">
+                <h2>Inpatient Statistics</h2>
+                <p></p>
+            </div>
+
+            @using (@Html.BeginForm("welcom", "Home", FormMethod.Get))
+            {
+
+                <div class="row counters">
+
+                    <div class="col-lg-3 col-6 text-center ">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.A1" data-purecounter-duration="2" class="purecounter"></span>
+                        <p class="bg-light bg-opacity-50"style="font-weight:bold; text-shadow:initial">OB/GYNE 1  </p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.A2" data-purecounter-duration="2" class="purecounter"></span>
+                        <p class="bg-light bg-opacity-50" style="font-weight:bold; text-shadow:initial">SURGERY  </p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.C1" data-purecounter-duration="2" class="purecounter"></span>
+                        <p class="bg-light bg-opacity-50" style="font-weight:bold; text-shadow:initial">NURSERY</p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.K1" data-purecounter-duration="2" class="purecounter"></span>
+                        <p class="bg-light bg-opacity-50" style="font-weight:bold; text-shadow:initial">INTENSIVE CARE UNIT 2 (EXT)  </p>
+                    </div>
+
+                </div><div class="row counters">
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.M1" data-purecounter-duration="2" class="purecounter"></span>
+                        <p class="bg-light bg-opacity-50" style="font-weight:bold; text-shadow:initial">Daycare - Male </p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.N1" data-purecounter-duration="2" class="purecounter"></span>
+                        <p class="bg-light bg-opacity-50" style="font-weight:bold; text-shadow:initial">INTENSIVE CARE UNIT 1 </p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.B2" data-purecounter-duration="2" class="purecounter"></span>
+                        <p class="bg-light bg-opacity-50" style="font-weight:bold; text-shadow:initial">INTERNAL MEDICINE \ PEDIATRIC </p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.B3" data-purecounter-duration="2" class="purecounter"></span>
+                        <p class="bg-light bg-opacity-50" style="font-weight:bold; text-shadow:initial">LTI Male </p>
+                    </div>
+
+                </div><div class="row counters">
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.B4" data-purecounter-duration="2" class="purecounter"></span>
+                        <p  class="bg-light bg-opacity-50" style="font-weight:bold; text-shadow:initial">LTI Female </p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.D1" data-purecounter-duration="2" class="purecounter"></span>
+                        <p class="bg-light bg-opacity-50" style="font-weight:bold; text-shadow:initial">DELIVERY ROOM </p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.E1" data-purecounter-duration="2" class="purecounter"></span>
+                        <p class="bg-light bg-opacity-50" style="font-weight:bold; text-shadow:initial">NICU (INCUBATOR) </p>
+                    </div>
+
+                    <div class="col-lg-3 col-6 text-center ">
+                        <span data-purecounter-start="0" data-purecounter-end="@ViewBag.I1" data-purecounter-duration="2" class="purecounter"></span>
+                        <p class="bg-light bg-opacity-50" style="font-weight:bold; text-shadow:initial">OPERATING ROOM </p>
+                    </div>
+
+                </div>}
+        </div>
+    </section>
+    <br />
+    <br /><br />
+    <br /><br />
+    <br />
+    <br /><br />
+    <br /><br />
+    <br /><br /><br />
+    <br /><br />
+    <br /><br /><br />
+    <br /><br />
+    <br />
+</body>

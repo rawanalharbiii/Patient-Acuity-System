@@ -1,0 +1,63 @@
+﻿@using acuity_tooll.ViewModel;
+@model Class1
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@*@foreach (var item in Model.TOOLS)
+    {
+        @item.MRN*@
+@Html.TextBoxFor(AC => AC.TOOLS.MRN, new { @class = "form-control", @readonly = true })
+
+
+
+
+<div class="container" style="width:40%;margin-top:2%">
+
+    @*<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">ADD ACUITY</a>*@
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @*<label> MRN </label>
+        @Html.TextBoxFor(AC => AC.TOOLS.MRN, new { @class = "form-control", @readonly = true })
+        <label> ACCOUNT#</label>
+        @Html.TextBoxFor(AC => AC.TOOLS.ACC_N, new { @class = "form-control", @readonly = true })
+        <label> Petient Name </label>
+        @Html.TextBoxFor(AC => AC.TOOLS.P_NAME, new { @class = "form-control", @readonly = true })
+        <label> Room </label>
+        @Html.TextBoxFor(AC => AC.TOOLS.ROOM, new { @class = "form-control", @readonly = true })
+        <label> Addmetion Date </label>
+        @Html.TextBoxFor(AC => AC.TOOLS.ADD_DATE, new { @class = "form-control", @readonly = true })
+        <label> Ward Unit </label>
+        @Html.TextBoxFor(AC => AC.TOOLS.WARD_DIS, new { @class = "form-control", @readonly = true })
+        @Html.HiddenFor(AC => AC.TOOLS.BED)
+        @Html.HiddenFor(AC => AC.TOOLS.WARD_CODE)
+        @Html.HiddenFor(AC => AC.TOOLS.DURATION)
+        @Html.HiddenFor(AC => AC.TOOLS.DOCTOR)*@
+        <label>MASTER</label>
+        @Html.TextBoxFor(AC => AC.EVS.MASTER_ID, new { @class = "form-control", @readonly = true })
+        <label>SHIFT</label>
+        @Html.TextBoxFor(AC => AC.EVS.SHIFT, new { @class = "form-control", @readonly = true })
+        <label> SCORE </label>
+        @Html.TextBoxFor(AC => AC.EVS.SCORE, new { @class = "form-control", @readonly = true })
+        <label> NURSE NAME  </label>
+        @Html.TextBoxFor(AC => AC.EVS.NURSE_NAME, new { @class = "form-control", @readonly = true })
+
+
+        @*@Html.DropDownListFor(model => model.IDD, ViewBag.DETAIL_List as SelectList, "--select--", new { @class = "form-control" })*@
+
+        @*@Html.TextBoxFor(AC => AC.SHIFT, new { @class = "form-control", @placeholder = "SHIFT" })*@
+
+
+        <div class="modal-footer">
+            <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+            <input type="submit" value="Save" class="btn btn-success" id="btnSubmit" />
+
+        </div>
+    }
+    </div>

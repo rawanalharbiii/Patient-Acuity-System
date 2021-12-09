@@ -1,0 +1,70 @@
+﻿@model acuity_tooll.Models.ACUITY_EV
+
+@{
+    ViewBag.Title = "Details";
+}
+<br />
+<br />
+<div class="shadow">
+    <div class="container">
+        <br />
+        <br />
+        <h4 style="text-shadow:initial">Patient Details</h4>
+        <hr />
+
+        <p><span style="color:#1c4288; font-weight:bold">Admission Date :</span> @Model.ACUITY_TOOL.ADD_DATE.Value.ToString(string.Format("dd/mm/yyyy")) &emsp;&emsp;&emsp;&emsp; <span style="color:#1c4288; font-weight:bold"> MRN :</span> @Model.ACUITY_TOOL.MRN  </p>
+        <p><span style="color:#1c4288; font-weight:bold">Name :</span> @Model.ACUITY_TOOL.P_NAME  &emsp;&emsp;&emsp;&emsp; &emsp; &emsp; <span style="color:#1c4288; font-weight:bold"> Room :</span> @Model.ACUITY_TOOL.ROOM  &emsp;&emsp;&emsp; <span style="color:#1c4288; font-weight:bold"> Bed :</span>@Model.ACUITY_TOOL.BED </p>
+        <p><span style="color:#1c4288; font-weight:bold">Ward :</span> @Model.ACUITY_TOOL.WARD_DIS  &emsp;&emsp;&emsp; <span style="color:#1c4288; font-weight:bold">Acuity Date :</span> @Model.ADD_DATE.Value.ToString(string.Format("dd/mm/yyyy"))</p>
+        <p><span style="color:#1c4288; font-weight:bold">Nurse :</span> @Model.NURSE_NAME  &emsp;&emsp;&emsp;&emsp; &emsp; <span style="color:#1c4288; font-weight:bold"> Shift :</span> @Model.SHIFT &emsp;&emsp; &emsp; &emsp;&emsp; <span style="color:#1c4288; font-weight:bold"> Score :</span> @if(ViewBag.SCORE < 17){<span>1</span>}else if (ViewBag.SCORE < 24){<span>2</span>}else if (ViewBag.SCORE > 24){<span>3</span>} </p>
+
+        <br />
+        <table class="row-cols-xl-2">
+
+            @foreach (var item in Model.ACUITY_TOOL.ACUITY_EV)
+            {
+
+                    <tr>
+                        <td><span style="color:#1c4288; font-weight:bold">@item.ACUITY_MASTER.TITLE : </span> <span style="font-weight:normal"> @item.ACUITY_DETAIL.SUB_TITLE</span></td>
+                    </tr>
+
+            }
+        </table>
+        <br />
+        <p>
+            <span style="color:#1c4288; font-weight:bold">Addition by: </span>
+
+            <span>
+                @Html.DisplayFor(model => model.USER_PROFILE.USER_NAME)
+            </span>
+        </p>
+        <p>
+            <span style="color:#1c4288; font-weight:bold">
+                Reviewed :
+            </span>
+
+            @if (Model.REVIEW == "T")
+            {<span>Yes</span>}
+            else
+            {<span>No</span>}
+            @*@Html.DisplayFor(model => model.REVIEW)*@
+
+        </p>
+        <p>
+            <span style="color:#1c4288; font-weight:bold">
+                Review by :
+            </span>
+            <span>
+                @Html.DisplayFor(model => model.REVIEWER_NAME)
+            </span>
+        </p>
+        <br />
+        <hr />
+        <p style="color:#00a883; font-weight:bold">
+            @Html.ActionLink("Back to List", "acuitylist")
+        </p>
+
+        <br />
+    </div>
+
+
+</div>

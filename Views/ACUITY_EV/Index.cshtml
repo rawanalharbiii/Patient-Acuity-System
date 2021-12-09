@@ -1,0 +1,106 @@
+﻿@model acuity_tooll.Models.ACUITY_TOOL
+@using acuity_tooll.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+<br /><br />
+<div>
+    <table class="table small">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MRN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.P_NAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ROOM)
+            </th>
+            <th>
+                SHIFT
+            </th>
+            <th>
+                Ward
+            </th>
+            <th>
+               Scoring Total
+            </th>
+            <th>
+                Score
+            </th>
+            <th>
+                Nurse Name
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model.ACUITY_EV.GroupBy(e => new { e.SHIFT, e.ADD_DATE ,e.NURSE_NAME}).Select(e => new { Key = e.Key, List = e.ToList() }).Select(e => new
+        {
+            ID = Model.ID_ACUITY,
+            MRN = Model.MRN,
+            NAME = Model.P_NAME,
+            ROOM = Model.ROOM,
+            addm = Model.ADD_DATE,
+            WARD=Model.WARD_DIS,
+            SHIFT = e.Key.SHIFT,
+            NURSE=e.Key.NURSE_NAME,
+            ADD_DATE = e.Key.ADD_DATE,
+            bag_det_mas = e.List.Select(ev => new { ev.ACUITY_MASTER, ev.ACUITY_DETAIL }),
+            TOTAL = e.List.Sum(ev => ev.ACUITY_DETAIL.VALUE)
+
+
+        }).ToList())
+
+        {
+            <tr>
+                <td style="word-break:break-all;">
+                    @item.MRN
+                </td>
+
+                <td>
+                    @item.NAME
+                </td>
+                <td>
+                    @item.ROOM
+                </td>
+                <td>
+                    @item.SHIFT
+                </td>
+                <td>
+                    @item.WARD
+                </td>
+                <td>
+                    @item.TOTAL
+                </td>
+
+                <td>
+                    @if (item.TOTAL < 17)
+                    {
+                        <p> 1</p>
+                    }
+                    else if (item.TOTAL < 24)
+                    {
+                        <p>2 </p>
+                    }
+                    else if (item.TOTAL > 24)
+                    {
+                        <p> 3 </p>
+                    }
+
+                </td>
+                <td>@item.NURSE</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "ACUITY_EV", new { id = item.ID }, null) |
+                    @Html.ActionLink("Details", "Details", "ACUITY_EV", new { id = item.ID }, null)
+                </td>
+            </tr>
+        }
+
+
+    </table>
+
+
+</div>
+
+

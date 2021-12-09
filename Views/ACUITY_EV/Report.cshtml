@@ -1,0 +1,121 @@
+﻿@model acuity_tooll.Models.ACUITY_TOOL
+    @using acuity_tooll.Models
+
+@{
+    ViewBag.Title = "Report";
+}
+
+
+<br />
+<br />
+
+<h4>@Model.P_NAME Evalution</h4>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create", new { id = ViewBag.Id })*@
+</p>
+<table class="table ">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MRN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.P_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ROOM)
+        </th>
+        <th>
+            SHIFT
+        </th>
+        <th>
+            Admission Date
+        </th>
+        <th>
+            TOTAL
+        </th>
+        <th>
+            Score
+        </th>
+        @{
+
+            var counter = 0;
+            foreach (var master in ViewBag.MasterList)
+            {
+                var masterDetailList = ((List<ACUITY_DETAIL>)ViewBag.DetailList).Where(e => e.MASTER_ID == master.ID).ToList();
+
+                <input type="hidden" name="details[@counter].MASTER_ID" value="@master.ID" />
+                <th> @master.TITLE</th>
+
+
+                counter++;
+            }
+        }
+    </tr>
+
+    @foreach (var item in Model.ACUITY_EV.GroupBy(e => new { e.SHIFT, e.ADD_DATE }).Select(e => new { Key = e.Key, List = e.ToList() }).Select(e => new
+    {
+        MRN = Model.MRN,
+        NAME = Model.P_NAME,
+        ROOM = Model.ROOM,
+        addm = Model.ADD_DATE,
+        SHIFT = e.Key.SHIFT,
+        ADD_DATE = e.Key.ADD_DATE,
+        bag_det_mas = e.List.Select(ev => new { ev.ACUITY_MASTER, ev.ACUITY_DETAIL}),
+        TOTAL = e.List.Sum(ev => ev.ACUITY_DETAIL.VALUE)
+
+
+    }).ToList())
+
+    {
+<tr>
+    <td>
+        @item.MRN
+    </td>
+
+    <td>
+        @item.NAME
+    </td>
+    <td>
+        @item.ROOM
+    </td>
+    <td>
+        @item.SHIFT
+    </td>
+    <td>
+        @item.addm
+    </td>
+    <td>
+        @item.TOTAL
+    </td>
+
+    <td>
+        @if (item.TOTAL < 17)
+        {
+            <p> 1</p>
+        }
+        else if (item.TOTAL < 24)
+        {
+            <p>2 </p>
+        }
+        else if (item.TOTAL > 24)
+        {
+            <p> 3 </p>
+        }
+
+    </td>
+    
+        @foreach (var bdm in item.bag_det_mas)
+        {
+
+            
+                @*<span style="font-weight:bold">@bdm.MASTER.M_DESC </span><br />*@
+           <td>@bdm.ACUITY_DETAIL.SUB_TITLE</td> 
+            
+        }
+    
+    @*<td>@item.ACUITY_DETAIL</td>*@
+</tr>
+    }
+
+</table>

@@ -1,0 +1,216 @@
+﻿@using acuity_tooll.Models
+@model IEnumerable<ACUITY_EV>
+
+@{
+    ViewBag.Title = "UserDashBoard";
+    //Layout = null;
+}
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colrolib Templates">
+    <meta name="author" content="Colrolib">
+    <meta name="keywords" content="Colrolib Templates">
+
+    <!-- Title Page-->
+    <title>search </title>
+
+    <!-- Icons font CSS-->
+    <link href="~/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="~/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="~/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="~/css/main.css" rel="stylesheet" media="all">
+    <link href="~/assets/css/style.css" rel="stylesheet">
+
+</head>
+
+@*@if (Session["USER_NAME"] != null)
+    {<p> Welcome @Session["USER_NAME"].ToString() </p>}*@
+@using (@Html.BeginForm("UserDashBoard", "Home", FormMethod.Get))
+{
+    <br />
+    <br />
+    <br />
+    <div class="card justify-content-center" style="width:700px;">
+        <div class="card-body">
+            @*<ul class="tab-list">
+                    <li class="tab-list__item active">
+                        <a class="tab-list__link" href="#tab1" data-toggle="tab">View</a>
+                    </li>
+                </ul>*@
+            <div class="tab-content">
+                <div class="row row-space">
+                    <div class="col-3">
+                        <div class="input-group">
+                            <label class="label" style="font-size: medium">MRN :</label>
+                            <input class="input--style-1" placeholder="123456" type="number" style="font-size:small" name="id" id="id">
+                        </div>
+                    </div>
+                    @*<div class="col-2">
+                            <div class="input-group">
+                                <label class="label">ACCOUNT :</label>
+                                <input class="input--style-1" type="text" name="check-out">
+                            </div>
+                        </div>*@
+                    <div class="col-3">
+                        <div class="input-group">
+                            <label class="label" style="font-size: medium">Addmetion Date:</label>
+                            <input style="font-size:small" class="input--style-1" type="date" name="d" placeholder="mm/dd/yyyy" id="d">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <label style="font-size: medium" class="label">Nurse Station:</label>
+                            <input style="font-size:small" class="input--style-1" placeholder="1A , 2B" type="text" name="ns" id="ns">
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <button class="btn-sm" style="border-color:#00a883; border:outset; font-weight:bold; color:#00a883; " type="submit" value="UserDashBoard">Search<span> <img src="~/images/search.png" style="width:20px;" /></span></button>
+              
+            </div>
+
+        </div>
+    </div>
+    <br />
+    <hr class="bi-three-dots" style="color: #00a883; font-weight:bold" />
+    <br />
+    <table class="table" style="white-space:nowrap; font-size:medium; text-align:center">
+        @if (Model != null)
+        {
+            <tr row-no-gutters">
+                <th>
+                    Acuity Date
+
+                </th>
+                <th>
+                    MRN
+
+                </th>
+
+                <th>
+                    Patient Name
+
+                </th>
+                <th>
+                    Room
+                </th>
+                <th> Shift</th>
+
+                <th>
+                    Score
+
+                </th>
+                <th>
+                    Nurse
+                </th>
+                <th>
+                    Reviewed?
+                </th>
+            </tr>
+
+            foreach (var item in Model.GroupBy(e => new { e.SHIFT, e.ADD_DATE, e.ACUITY_TOOL.MRN, e.ACUITY_TOOL.P_NAME, e.ACUITY_TOOL.ROOM, e.NURSE_NAME, e.REVIEW }).Select(e => new { Key = e.Key, List = e.ToList() }).Select(e => new
+            {
+                nurse = e.Key.NURSE_NAME,
+                review = e.Key.REVIEW,
+                MRN = e.Key.MRN,
+                NAME = e.Key.P_NAME,
+                ROOM = e.Key.ROOM,
+                SHIFT = e.Key.SHIFT,
+                ADD_DATE = e.Key.ADD_DATE,
+                TOTAL = e.List.Sum(ev => ev.ACUITY_DETAIL.VALUE)
+
+
+            }).ToList())
+
+            {
+                <tr>
+                    <td>
+                        @item.ADD_DATE.Value.ToString(string.Format("dd/mm/yyyy"))
+                    </td>
+                    <td>
+                        @item.MRN
+                    </td>
+                    <td>
+                        @item.NAME
+                    </td>
+                    <td>
+                        @item.ROOM
+                    </td>
+                    <td>
+                        @item.SHIFT
+                    </td>
+
+                    <td>
+                        @if (item.TOTAL < 17)
+                        {
+                            <p> 1</p>
+                        }
+                        else if (item.TOTAL < 24)
+                        {
+                            <p>2 </p>
+                        }
+                        else if (item.TOTAL > 24)
+                        {
+                            <p> 3 </p>
+                        }
+                    </td>
+                    <td>
+                        @item.nurse
+                    </td>
+
+                    <td>
+                        @if (item.review == "F")
+                        {
+                            <p> NO </p>
+                        }
+                        else if (item.review == "T")
+                        {
+                            <p>YES</p>
+                        }
+
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <p><b> No Mach Any Data </b></p>
+        }
+    </table>
+
+}
+<br />
+<br />
+
+<br />
+
+<br />
+
+<br />
+
+<!-- Jquery JS-->
+<script src="~/vendor/jquery/jquery.min.js"></script>
+<!-- Vendor JS-->
+<script src="~/vendor/select2/select2.min.js"></script>
+<script src="~/vendor/jquery-validate/jquery.validate.min.js"></script>
+<script src="~/vendor/bootstrap-wizard/bootstrap.min.js"></script>
+<script src="~/vendor/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="~/vendor/datepicker/moment.min.js"></script>
+<script src="~/vendor/datepicker/daterangepicker.js"></script>
+
+<!-- Main JS-->
+<script src="~/js/global.js"></script>
+
+<!-- This templates was made by Colorlib (https://colorlib.com) -->

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<acuity_tooll.Models.ACUITY_TOOL>
+
+
+@{
+    ViewBag.Title = "ac_page";
+}
+
+<body class="container body-content ">
+
+
+    @*@if (Session["USER_NAME"] != null)
+        {<p> Welcome @Session["USER_NAME"].ToString() </p>}*@
+    <br />
+
+    <table class="table" style="margin-left: auto; margin-right: auto;">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">MRN</th>
+                <th scope="col">Account NO</th>
+                <th scope="col">Patient Name</th>
+                <th scope="col">Addmetion Date</th>
+                <th scope="col">ROOM</th>
+                <th scope="col">WARD</th>
+                @*<th scope="col">Special Observation</th>
+        <th scope="col">Skin Integrity & Braden</th>
+        <th scope="col">Medications</th>
+        <th scope="col">Blood Products</th>
+        <th scope="col">Procedures</th>
+        <th scope="col">Nutrition</th>
+        <th scope="col">Neuromuscular</th>
+        <th scope="col">Elimination</th>
+        <th scope="col">Mobility/Ambulation</th>
+        <th scope="col">Repiratory Function</th>
+        <th scope="col">Drains & Catheters</th>
+        <th scope="col">Lab. Tests</th>
+        <th scope="col">Psychosocial</th>
+        <th scope="col">Isolation</th>
+        <th scope="col">Restraints</th>
+        <th scope="col">Falling Down</th>*@
+                @*<th scope="col">score</th>
+        <th scope="col">Nurse Name</th>
+        <th scope="col">Reviewed</th>
+        <th scope="col">Reviewer Name</th>*@
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+            @if (Model != null)
+            {
+
+                foreach (var item in Model)
+                {
+
+            <tr>
+
+                <td><b>@item.MRN</b></td>
+                <td><p><b>@item.ACC_N</b></p></td>
+                <td><p><b>@item.P_NAME</b></p></td>
+                <td><p><b>@item.ADD_DATE</b></p></td>
+                <td><p><b>@item.ROOM</b></p></td>
+                <td><p><b>@item.WARD_DIS</b></p></td>
+                @*<td><p><b>@item.SPECIAL_OBSERVATION</b></p></td>
+        <td><p><b>@item.SKIN_INTEGRITY_BRADEN</b></p></td>
+        <td><p><b>@item.MEDICATIONS</b></p></td>
+        <td><p><b>@item.BLOOD_PRODUCTS</b></p></td>
+        <td><p><b>@item.PROCEDURES</b></p></td>
+        <td><p><b>@item.NUTRITION</b></p></td>
+        <td><p><b>@item.NEUROMUSCULAR</b></p></td>
+        <td><p><b>@item.ELIMINATION</b></p></td>
+        <td><p><b>@item.MOBILITY_AMBULATION</b></p></td>
+        <td><p><b>@item.REPIRATORY</b></p></td>
+        <td><p><b>@item.DRAINS_CATHETERS</b></p></td>
+        <td><p><b>@item.LAB_TESTS</b></p></td>
+        <td><p><b>@item.PSYCHOSOCIAL</b></p></td>
+        <td><p><b>@item.ISOLATIONS</b></p></td>
+        <td><p><b>@item.RESTRAINTS</b></p></td>
+        <td><p><b>@item.FALLING_DOWN</b></p></td>*@
+                @*<td><p><b>@item.SCORE</b></p></td>
+        <td><p><b>@item.NURSE_NAME</b></p></td>
+        <td><p><b>@item.REVIEWED</b></p></td>
+        <td><p><b>@item.REVIEWER_NAME</b></p></td>*@
+                <td>
+                  @Html.ActionLink("UPDATE", "UpdateTool", new { id = @item.MRN }) | @Html.ActionLink("REVIEW", "ReviewTool", new { id = @item.MRN })
+                    | @Html.ActionLink("Edit", "Edit", new { id = @item.MRN })
+                </td>
+
+
+            </tr>
+                }
+
+
+            }
+        </tbody>
+    </table>
+</body>

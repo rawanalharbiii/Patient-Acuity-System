@@ -1,0 +1,140 @@
+﻿@using acuity_tooll.ViewModel
+@model Class1
+@*@model acuity_tooll.ViewModel.Class1*@
+
+@{
+    ViewBag.Title = "ADD_AC";
+}
+
+
+
+<div class="container" style="width:40%;margin-top:2%">
+
+    @*<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">ADD ACUITY</a>*@
+
+    @using (Html.BeginForm(@*"ADD_AC","Home",FormMethod.Post*@))
+    {
+        @Html.AntiForgeryToken()
+
+        <label> MRN </label>
+        @Html.TextBoxFor(AC => AC.TOOLS.MRN, new { @class = "form-control" })
+        <label> ACCOUNT#</label>
+        @Html.TextBoxFor(AC => AC.TOOLS.ACC_N, new { @class = "form-control" })
+        <label> Petient Name </label>
+        @Html.TextBoxFor(AC => AC.TOOLS.P_NAME, new { @class = "form-control" })
+        <label> Room </label>
+        @Html.TextBoxFor(AC => AC.TOOLS.ROOM, new { @class = "form-control"})
+        <label> Addmetion Date </label>
+        @Html.TextBoxFor(AC => AC.TOOLS.ADD_DATE, new { @class = "form-control"})
+        <label> Ward Unit </label>
+        @Html.TextBoxFor(AC => AC.TOOLS.WARD_DIS, new { @class = "form-control"})
+        @Html.HiddenFor(AC => AC.TOOLS.BED)
+        @Html.HiddenFor(AC => AC.TOOLS.WARD_CODE)
+        @Html.HiddenFor(AC => AC.TOOLS.DURATION)
+        @Html.HiddenFor(AC => AC.TOOLS.DOCTOR)
+        <label>MASTER</label>
+        @Html.TextBoxFor(AC => AC.EVS.MASTER_ID, new { @class = "form-control" })
+        <label>SHIFT</label>
+        @Html.TextBoxFor(AC => AC.EVS.SHIFT, new { @class = "form-control"})
+        <label> SCORE </label>
+        @Html.TextBoxFor(AC => AC.EVS.SCORE, new { @class = "form-control"})
+        <label> NURSE NAME  </label>
+        @Html.TextBoxFor(AC => AC.EVS.NURSE_NAME, new { @class = "form-control"})
+
+        @*@Html.DropDownListFor(model => model.IDD, ViewBag.DETAIL_List as SelectList, "--select--", new { @class = "form-control" })*@
+
+        @*@Html.TextBoxFor(AC => AC.SHIFT, new { @class = "form-control", @placeholder = "SHIFT" })*@
+
+
+        <div class="modal-footer">
+            <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+            <input type="submit" value="Save" class="btn btn-success" id="btnSubmit" />
+
+        </div>
+
+
+
+
+        <!--<div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+                        <h3 class="modal-title">Patient Acuity </h3>
+
+                    </div>
+                    <div class="modal-body">
+
+                        <form id="myForm">-->
+
+        @*@Html.DropDownListFor(model => model.ID, ViewBag.DETAIL_List as SelectList, "--select--", new { @class = "form-control" })*@
+
+        @*@Html.TextBoxFor(AC => AC.MRN, new { @class = "form-control", @placeholder = "MRN" })
+
+            @Html.TextBoxFor(AC => AC.ACC_N, new { @class = "form-control", @placeholder = "NAME" })
+
+            @Html.TextBoxFor(AC => AC.P_NAME, new { @class = "form-control", @placeholder = "ROOM" })
+
+            @Html.TextBoxFor(AC => AC.ROOM, new { @class = "form-control", @placeholder = "SHIFT" })
+
+            @Html.TextBoxFor(AC => AC.SHIFT, new { @class = "form-control", @placeholder = "SCORE" })
+            @Html.TextBoxFor(AC => AC.SHIFT, new { @class = "form-control", @placeholder = "NURSE" })*@
+
+
+        @*@Html.DropDownListFor(model => model.SPECIAL_OBSERVATION, ViewBag.DETAIL_List as SelectList, "--select--", new { @class = "form-control" })*@
+
+
+        <!--</form>
+
+        <div style="text-align:center;display:none" id="loaderDiv">
+            <img src="~/images/nn.jpg" width="150" />--> @* //put any image in content folder*@
+            <!--</div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                            <input type="reset" value="Submit" class="btn btn-success" id="btnSubmit" />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>-->
+        }
+</div>
+
+@*<script>
+
+        $(document).ready(function () {
+
+
+            $("#btnSubmit").click(function () {
+
+                $("#loaderDiv").show();
+
+                var myformdata = $("#myForm").serialize();
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Home/ADD_AC",
+                    data: myformdata,
+                    success: function () {
+                        $("#loaderDiv").hide();
+                        $("#myModal").modal("hide");
+
+                    }
+
+                })
+            })
+
+        })
+
+
+    </script>*@
+
+

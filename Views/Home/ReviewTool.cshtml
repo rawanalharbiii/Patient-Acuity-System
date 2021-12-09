@@ -1,0 +1,157 @@
+﻿@using acuity_tooll.Models
+@model IEnumerable<acuity_tooll.Models.ACUITY_EV>
+
+@{
+    ViewBag.Title = "ReviewTool";
+}
+
+
+<div>
+    <br />
+    <br />
+    <table>
+        <tr>
+
+            @using (@Html.BeginForm("ReviewTool", "Home", FormMethod.Get))
+            {
+
+                <td>
+                    @Html.TextBox("search", "", new { @class = "form-control" })
+                </td>
+                <td>
+                    <button type="submit" style=" background-image: url('../../images/search.png');background-repeat:no-repeat; width:40px;height:40px; color: #ffffff;" @*value="Search"*@ class=" btn" />
+                </td>
+            }
+        </tr>
+    </table>
+    <br />
+    <br />
+    @using (Html.BeginForm("ReviewTool", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <table class="table small">
+            <tr>
+                <th style="text-align:center">
+                    Acuity Date
+                </th>
+                <th style="text-align:center">
+                    MRN
+                </th>
+                <th style="text-align:center">
+                    NAME
+                </th>
+                <th style="text-align:center">
+                    ROOM
+                </th>
+                <th style="text-align:center">
+                    SHIFT
+                </th>
+                <th style="text-align:center">WARD</th>
+
+                <th style="text-align:center">
+                    SCORE
+                </th>
+                <th style="text-align:center">
+                    NURSE
+                </th>
+                <th style="text-align:center">REVIEW</th>
+            </tr>
+
+            @if (Model != null)
+            {
+                foreach (var item in Model.GroupBy(e => new { e.ACUITY_TOOL.P_NAME, e.ACUITY_TOOL.MRN, e.ACUITY_TOOL.ROOM, e.SHIFT, e.NURSE_NAME, e.ACUITY_TOOL.WARD_DIS, e.ADD_DATE, e.REVIEW, e.ACUITY_TOOL.ID_ACUITY }).Select(e => new { Key = e.Key, List = e.ToList() }).Select(e => new
+                {
+                    ID = e.Key.ID_ACUITY,
+                    NAME = e.Key.P_NAME,
+                    MRN = e.Key.MRN.Value,
+                    ROOM = e.Key.ROOM.Value,
+                    SHIFT = e.Key.SHIFT,
+                    nurse = e.Key.NURSE_NAME,
+                    WARD = e.Key.WARD_DIS,
+                    review = e.Key.REVIEW,
+                    ADD_DATE = e.Key.ADD_DATE.Value,
+                    //bag_det_mas = e.List.Select(ev => new { ev.ACUITY_MASTER, ev.ACUITY_DETAIL }),
+                    TOTAL1 = e.List.Sum(ev => ev.ACUITY_DETAIL.VALUE)
+                }).ToList())
+                {
+                    <tr>
+                        <td style="text-align:center">@item.ADD_DATE.ToString(string.Format("dd/MM/yyyy"))</td>
+                        <td style="text-align:center">@item.MRN</td>
+                        <td style="text-align:center">@item.NAME</td>
+                        <td style="text-align:center">@item.ROOM</td>
+                        <td style="text-align:center">@item.SHIFT</td>
+                        <td style="text-align:center">@item.WARD</td>
+                        <td style="text-align:center">
+                            @if (item.TOTAL1 < 17)
+                            {
+                                <p> 1</p>
+                            }
+                            else if (item.TOTAL1 < 24)
+                            {
+                                <p>2 </p>
+                            }
+                            else if (item.TOTAL1 > 24)
+                            {
+                                <p> 3 </p>
+                            }
+
+                        </td>
+                        <td style="text-align:center">@item.nurse</td>
+                        <td style="text-align:center">
+                            @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>*@
+
+
+                            <input type="checkbox" name="ch1" class="checkbox" id="checkbox1" value="@item.ID">
+
+                        </td>
+                    </tr>
+                }
+            }
+
+        </table>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" style="background-color: #00a883; margin: 0; color:#ffffff;" value="Save" class="btn" />
+            </div>
+        </div>}
+</div>
+
+
+@*<script>
+    $(document).ready(function () {
+        $("#checkbox1").on('change', function () {
+            if ($(this).is(':checked')) {
+                $(this).attr('value', 'true');
+            } else {
+                $(this).attr('value', 'false');
+            }
+        });
+    });
+</script>*@
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#checkbox1").click(function () {
+            var array = [];
+            if ($(this).is(":checked")) {
+                array.push($(this).val());
+            }
+            else {
+                array.pop($(this).val());
+            }
+$.ajax({
+    type: "POST",
+    url: '@Url.Action("ReviewTool", "Home")',
+    dataType: "html",
+    contentType: "application/json; charset=utf-8", 
+    data: $('form').serialize(),
+    success: function (data) {
+                $('#ch1').html(data);
+    }
+});
+        });
+    });
+</script>

@@ -1,0 +1,91 @@
+﻿@using acuity_tooll.Models
+@model ACUITY_EV
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<br />
+<br />
+<div class="form-horizontal">
+    <h4 style="color:#1C4288; font-weight:bold">Edit Acuity</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group" style="display: none;">
+        @Html.DropDownList("AC_ID", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.AC_ID, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.AC_ID, "MRN :", htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883; font-weight:bold" })<br />
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.ACUITY_TOOL.MRN, null, new { @class = "form-control", disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.AC_ID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ACUITY_TOOL.P_NAME, "Petient Name :", htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883; font-weight:bold" })<br />
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.ACUITY_TOOL.P_NAME, null, new { @class = "form-control", @readonly = true, disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.ACUITY_TOOL.P_NAME, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ACUITY_TOOL.ROOM, "ROOM :", htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883; font-weight:bold" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.ACUITY_TOOL.ROOM, null, new { @class = "form-control", type = "tel", disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.ACUITY_TOOL.ROOM, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SHIFT, "Shift :", htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883; font-weight:bold" })
+        <div class="col-md-10">
+            @Html.DropDownList("SHIFT", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SHIFT, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <input type="hidden" name="MASTER_ID" value="1" />
+    <input type="hidden" name="DET_ID" value="1" />
+
+
+    <table class="row-cols-xl-2">
+
+        @foreach (var item in Model.ACUITY_TOOL.ACUITY_EV)
+        {
+            <tr>
+                <td><span style = "color:#00a883; font-weight:bold">@item.ACUITY_MASTER.TITLE : </span> <span style="font-weight:normal"> @item.ACUITY_DETAIL.SUB_TITLE</span></td>
+            </tr>
+        }
+    </table>
+    @Html.LabelFor(model => model.SCORE, htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883; font-weight:bold" })<br />
+
+    @Html.DisplayFor(model => model.SCORE, new { htmlAttributes = new { @class = "form-control", type = "tel" } })
+    @Html.ValidationMessageFor(model => model.SCORE, "", new { @class = "text-danger" })
+
+
+    @Html.LabelFor(model => model.NURSE_NAME, "Nurse Name :", htmlAttributes: new { @class = "control-label col-md-2", style = "color:#00a883; font-weight:bold" })
+    @Html.EditorFor(model => model.NURSE_NAME, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.NURSE_NAME, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn-about " />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @*@Html.ActionLink("Back to List", "Index")*@
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

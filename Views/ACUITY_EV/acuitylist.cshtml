@@ -1,0 +1,163 @@
+﻿@using acuity_tooll.Models
+@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<ACUITY_EV>
+@{
+    ViewBag.Title = "acuitylist";
+}
+<br />
+<br />
+<style>
+
+    #pager {
+        padding-left: 5%
+    }
+
+        #pager p {
+            margin-left: 5%;
+        }
+</style>
+<div>
+    <a href="~/Home/addacuity" style="font-weight:bold;">
+        <img src="~/images/ADDD.png" /> Add Patient Acuity
+    </a>
+    <hr />
+    @using (@Html.BeginForm("acuitylist", "ACUITY_EV", FormMethod.Get))
+    {
+        <table>
+            <tr>
+                <td>
+                    @Html.TextBox("search", "", new { @class = "form-control" })
+                </td>
+                <td>
+                    <button type="submit" style=" background-image: url('../../images/search.png');background-repeat:no-repeat; width:40px;height:40px; color: #ffffff;" class=" btn " />
+                </td>
+            </tr>
+        </table>
+    }
+    <br />
+    <table class="table small justify-content-center" style="text-align:center">
+        <tr>
+            <th style="color:#1c4288; font-weight:bold">Acuity Date</th>
+            <th style="color:#1c4288; font-weight:bold">
+                MRN
+            </th>
+            <th style="color:#1c4288; font-weight:bold"> Patient Name </th>
+            <th style="color:#1c4288; font-weight:bold">
+                Room
+            </th>
+            <th style="color:#1c4288; font-weight:bold">
+                SHIFT
+            </th>
+            <th style="color:#1c4288; font-weight:bold">
+                Ward
+            </th>
+            <th style="color:#1c4288; font-weight:bold">
+                Scoring Total
+            </th>
+            <th style="color:#1c4288; font-weight:bold">
+                Score
+            </th>
+            <th style="color:#1c4288; font-weight:bold">
+                Nurse
+            </th>
+            <th style="color:#1c4288; font-weight:bold">
+                Reviewed?
+            </th>
+
+
+        </tr>
+
+        @foreach (var item in Model.GroupBy(e => new { e.ACUITY_TOOL.P_NAME, e.ACUITY_TOOL.MRN, e.ACUITY_TOOL.ROOM, e.SHIFT, e.NURSE_NAME, e.ACUITY_TOOL.WARD_DIS, e.ADD_DATE, e.REVIEW, e.ACUITY_TOOL.ID_ACUITY }).Select(e => new { Key = e.Key, List = e.ToList() }).Select(e => new
+        {
+            ID = e.Key.ID_ACUITY,
+            MRN = e.Key.MRN,
+            NAME = e.Key.P_NAME,
+            ROOM = e.Key.ROOM,
+            addm = e.Key.ADD_DATE,
+            WARD = e.Key.WARD_DIS,
+            SHIFT = e.Key.SHIFT,
+            rev = e.Key.REVIEW,
+            NURSE = e.Key.NURSE_NAME,
+            ADD_DATE = e.Key.ADD_DATE.Value,
+            bag_det_mas = e.List.Select(ev => new { ev.ACUITY_MASTER, ev.ACUITY_DETAIL }),
+            TOTAL = e.List.Sum(ev => ev.ACUITY_DETAIL.VALUE)
+
+
+        }).ToList())
+
+        {
+            <tr>
+                <td>@item.ADD_DATE.ToString(string.Format("dd/MM/yyyy"))</td>
+                <td style="word-break:break-all;">
+                    @item.MRN
+                </td>
+
+                <td>
+                    @item.NAME
+                </td>
+                <td>
+                    @item.ROOM
+                </td>
+                <td>
+                    @item.SHIFT
+                </td>
+                <td>
+                    @item.WARD
+                </td>
+                <td>
+                    @item.TOTAL
+                </td>
+
+                <td>
+                    @if (item.TOTAL < 17)
+                    {
+                        <p> 1</p>
+                    }
+                    else if (item.TOTAL < 24)
+                    {
+                        <p>2 </p>
+                    }
+                    else if (item.TOTAL > 24)
+                    {
+                        <p> 3 </p>
+                    }
+
+                </td>
+                <td style="color:#00a883; font-weight:bold">@item.NURSE</td>
+                <td>
+                    @if (item.rev == "F")
+                    {
+                        @*<p> No </p>*@
+                        <img src="~/images/ccf.png" />
+                    }
+                    else if (item.rev == "T")
+                    {
+                        @*<p>Yes</p>*@
+                        <img src="~/images/checked.png" />
+                    }
+
+                </td>
+
+                <td>
+                    @Html.ActionLink("Details", "Details", "ACUITY_EV", new { id = item.ID }, null)
+                    @if (Session["USER_NAME"] != null)
+                    {<span>
+                            | @Html.ActionLink("Edit", "Edit", "ACUITY_EV", new { id = item.ID }, null) |
+                            @Html.ActionLink("Delete", "Delete", "ACUITY_EV", new { id = item.ID }, null)
+                        </span>
+                    }
+                </td>
+            </tr>
+        }
+
+<br />
+    </table>
+    @*@Html.PagedListPager(Model,i=>Url.Action("acuitylist","ACUITY_EV",new {i}))*@
+    <div id="pager">
+        <p> Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</p>
+        @Html.PagedListPager(Model, page => Url.Action("acuitylist", "ACUITY_EV", new { page, @class = "btn btn-default" }))
+    </div>
+
+</div>
+

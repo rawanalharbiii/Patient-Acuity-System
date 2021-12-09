@@ -1,0 +1,93 @@
+﻿@model IEnumerable<acuity_tooll.Models.ACUITY_TOOL>
+
+
+@{
+    ViewBag.Title = "addacuity";
+}
+<head>
+
+    <meta http-equiv="refresh" content="300" />
+</head>
+<body>
+    @*@if (Session["USER_NAME"] != null)
+        {<p> Welcome @Session["USER_NAME"].ToString() </p>}*@
+    <br />
+    @using (@Html.BeginForm("addacuity", "Home", FormMethod.Get))
+    {<br />
+        <table>
+            <tr>
+                <td>
+                    @Html.TextBox("search", "", new { @class = "form-control" })
+                </td>
+                <td>
+                    <button type="submit" style=" background-image: url('../../images/search.png');background-repeat:no-repeat; width:40px;height:40px; color: #ffffff;" class=" btn " />
+                </td>
+            </tr>
+        </table>
+    }
+    <br />
+    <table class="table" style="max-width:min-content;white-space:nowrap; text-align:center    ">
+        <thead class="thead-light" style="color: #00a883;">
+            <tr>
+                <th style=" text-align:center" scope="col">MRN</th>
+                <th style=" text-align:center" scope="col">Account NO</th>
+                <th style=" text-align:center" scope="col">Patient Name</th>
+                <th style=" text-align:center" scope="col">ADDMETIN DATE</th>
+                <th style=" text-align:center" scope="col">WARD</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr class="row-no-gutters">
+                        <td><b>@item.MRN</b></td>
+                        <td><p><b>@item.ACC_N</b></p></td>
+                        <td><p><b>@item.P_NAME</b></p></td>
+                        <td><p><b>@item.ADD_DATE</b></p></td>
+                        <td><p><b>@item.WARD_DIS</b></p></td>
+                        <td style="color:#1c4288; font-weight:bold">
+                            @Html.ActionLink("Add Acuity Tool !", "Create", "ACUITY_EV", new { id = @item.ID_ACUITY }, null)
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+
+    @*<script>
+
+            $(document).ready(function () {
+
+
+                $("#btnSubmit").click(function () {
+
+                    $("#loaderDiv").show();
+
+                    var myformdata = $("#myForm").serialize();
+
+                    $.ajax({
+
+                        type: "POST",
+                        url: "/Home/ADD_AC",
+                        data: myformdata,
+                        success: function () {
+                            $("#loaderDiv").hide();
+                            $("#myModal").modal("hide");
+
+                        }
+
+                    })
+                })
+
+            })
+
+
+        </script>*@
+
+</body>
+
+
